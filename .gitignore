@@ -1,0 +1,12 @@
+# Maven build output
+/target/
+
+# IDE settings
+.vscode/
+.metadata/
+
+# Database properties
+/src/main/resources/db.properties
+
+# Log files
+*.log
