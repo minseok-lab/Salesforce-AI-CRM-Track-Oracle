@@ -4,7 +4,7 @@ public class AuthorVO {
   private int author_id;
   private String author_name;
   private String author_desc;
-  
+
   public AuthorVO() {
   }
 
@@ -32,7 +32,7 @@ public class AuthorVO {
   public void setAuthor_id(int author_id) {
     this.author_id = author_id;
   }
-  
+
   /**
    * @return the author_name
    */
@@ -60,7 +60,7 @@ public class AuthorVO {
   public void setAuthor_desc(String author_desc) {
     this.author_desc = author_desc;
   }
-  
+
   @Override
   public String toString() {
     return "AuthorVO [author_id=" + author_id + ", author_name=" + author_name + ", author_desc=" + author_desc + "]";

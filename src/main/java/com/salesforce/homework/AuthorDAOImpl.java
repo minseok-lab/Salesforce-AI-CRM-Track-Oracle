@@ -96,7 +96,7 @@ public class AuthorDAOImpl implements AuthorDAO {
 
       // 3. SQL문 준비 / 바인딩 / 실행
       // int count = pstmt.executeUpdate(); //insert, update, delete
-      String query = "select * from author";
+      String query = "select * from author ORDER BY author_id ASC";
       pstmt = conn.prepareStatement(query);
       rs = pstmt.executeQuery(); // select
 
@@ -140,7 +140,10 @@ public class AuthorDAOImpl implements AuthorDAO {
       conn = getConnection();
 
       // author_id를 기반으로 author_name과 author_desc 수정
-      String query = "UPDATE author SET author_name = ?, author_desc = ? WHERE author_id = ?";
+      String query = "UPDATE author"
+                   + "SET author_name = ?, author_desc = ?"
+                   + "WHERE author_id = ?"
+                   + "ORDER BY author_id ASC";
       pstmt = conn.prepareStatement(query);
 
       pstmt.setString(1, vo.getAuthor_name());
@@ -200,4 +203,51 @@ public class AuthorDAOImpl implements AuthorDAO {
     return count;
   }
 
+  @Override
+  public List<AuthorVO> getList(String keyword) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    List<AuthorVO> list = new ArrayList<>();
+
+    try {
+
+      conn = getConnection();
+
+      // 3. SQL문 준비 / 바인딩 / 실행
+      // int count = pstmt.executeUpdate(); //insert, update, delete
+      String query = "SELECT * FROM author WHERE author_name LIKE ? OR author_desc LIKE ? ORDER BY author_id ASC";
+      pstmt = conn.prepareStatement(query);
+      String likeKeyword = "%" + keyword + "%";
+      pstmt.setString(1, likeKeyword);
+      pstmt.setString(2, likeKeyword);
+      rs = pstmt.executeQuery(); // select
+
+      // 4.결과처리
+      while (rs.next()) {
+        int author_id = rs.getInt("author_id");
+        String author_name = rs.getString("author_name");
+        String author_desc = rs.getString("author_desc");
+        AuthorVO vo = new AuthorVO(author_id, author_name, author_desc);
+        list.add(vo);
+        // System.out.println(author_id + "\t" + author_name + "\t" + author_desc );
+      }
+    } catch (SQLException e) {
+      System.out.println("error:" + e);
+    } finally { 
+
+      // 5. 자원정리
+      try {
+        if (rs != null)
+          rs.close();
+        if (pstmt != null)
+          pstmt.close();
+        if (conn != null)
+          conn.close();
+      } catch (SQLException e) {
+        System.out.println("error:" + e);
+      }
+    }
+    return list;
+  }
 }

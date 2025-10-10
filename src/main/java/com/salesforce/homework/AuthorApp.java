@@ -10,10 +10,10 @@ public class AuthorApp {
     AuthorDAO dao = new AuthorDAOImpl();
 
     while (true) {
-      System.out.println("\n==============================================================");
-      System.out.println("|                     저자 관리 프로그램                     |");
-      System.out.println("| 1.저자추가 | 2.저자수정 | 3.저자삭제 | 4.저자목록 | 5.종료 |");
-      System.out.println("==============================================================");
+      System.out.println("\n==============================================================================");
+      System.out.println("|                              저자 관리 프로그램                            |");
+      System.out.println("| 1.저자추가 | 2.저자수정 | 3.저자삭제 | 4.저자목록 | 5.키워드 검색 | 6.종료 |");
+      System.out.println("==============================================================================");
       System.out.print("메뉴 선택 >> ");
 
       int menu;
@@ -73,7 +73,27 @@ public class AuthorApp {
           System.out.println("------------------------------------");
           break;
 
-        case 5: // 5. 종료
+        case 5: // 5. 키워드 검색
+          System.out.println("[저자 정보 검색]");
+          System.out.print("검색할 키워드: ");
+          String keyword = sc.nextLine();
+
+          List<AuthorVO> searchList = dao.getList(keyword);
+          System.out.println("\n----------- [키워드 검색 결과] -----------");
+          if (searchList.isEmpty()) {
+            System.out.println("검색 결과가 없습니다.");
+          } else {
+            for (AuthorVO author : searchList) {
+              System.out.printf("ID: %d, 이름: %s, 설명: %s\n",
+                  author.getAuthor_id(),
+                  author.getAuthor_name(),
+                  author.getAuthor_desc());
+            }
+          }
+          System.out.println("------------------------------------");
+          break;
+
+        case 6: // 6. 종료
           System.out.println("프로그램을 종료합니다.");
           sc.close(); // Scanner 종료
           return;
