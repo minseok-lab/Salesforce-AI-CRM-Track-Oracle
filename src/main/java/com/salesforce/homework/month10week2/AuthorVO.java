@@ -1,4 +1,4 @@
-package com.salesforce.homework;
+package com.salesforce.homework.month10week2;
 
 public class AuthorVO {
   private int author_id;
