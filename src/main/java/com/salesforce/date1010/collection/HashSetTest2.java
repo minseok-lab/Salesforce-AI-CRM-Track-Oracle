@@ -1,7 +1,7 @@
 package com.salesforce.date1010.collection;
 
 import java.util.HashSet;
-import java.lang.reflect.Array;
+// import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class HashSetTest2 {
